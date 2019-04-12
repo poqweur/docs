@@ -16,8 +16,9 @@ WARNING:
 
 # Supported tags and respective `Dockerfile` links
 
--	[`1.8.4`, `1.8`, `1`, `latest` (*1.8/Dockerfile*)](https://github.com/composer/docker/blob/ebbb9efd87b78cf9b837f97105bcb6c5f0ee44ef/1.8/Dockerfile)
--	[`1.7.3`, `1.7` (*1.7/Dockerfile*)](https://github.com/composer/docker/blob/ebbb9efd87b78cf9b837f97105bcb6c5f0ee44ef/1.7/Dockerfile)
+**No supported tags found!**
+
+It is very likely that `composer` does not support the currently selected architecture (`windows-amd64`).
 
 # Quick reference
 
@@ -31,7 +32,7 @@ WARNING:
 	[Composer](https://github.com/composer/docker)
 
 -	**Supported architectures**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64))  
-	[`amd64`](https://hub.docker.com/r/amd64/composer/), [`arm32v6`](https://hub.docker.com/r/arm32v6/composer/), [`arm64v8`](https://hub.docker.com/r/arm64v8/composer/), [`i386`](https://hub.docker.com/r/i386/composer/), [`ppc64le`](https://hub.docker.com/r/ppc64le/composer/)
+	[`amd64`](https://hub.docker.com/r/amd64/composer/), [`arm32v6`](https://hub.docker.com/r/arm32v6/composer/), [`arm32v7`](https://hub.docker.com/r/arm32v7/composer/), [`arm64v8`](https://hub.docker.com/r/arm64v8/composer/), [`i386`](https://hub.docker.com/r/i386/composer/), [`ppc64le`](https://hub.docker.com/r/ppc64le/composer/)
 
 -	**Published image artifact details**:  
 	[repo-info repo's `repos/composer/` directory](https://github.com/docker-library/repo-info/blob/master/repos/composer) ([history](https://github.com/docker-library/repo-info/commits/master/repos/composer))  
@@ -64,7 +65,7 @@ Running the `composer` image is as simple as follows:
 ```console
 $ docker run --rm --interactive --tty \
   --volume $PWD:/app \
-  composer install
+  winamd64/composer install
 ```
 
 ### Persistent cache / global configuration
@@ -75,7 +76,7 @@ You can bind mount the Composer home directory from your host to the container t
 $ docker run --rm --interactive --tty \
   --volume $PWD:/app \
   --volume $COMPOSER_HOME:/tmp \
-  composer install
+  winamd64/composer install
 ```
 
 **Note:** this relies on the fact that the `COMPOSER_HOME` value is set to `/tmp` in the image by default.
@@ -91,7 +92,7 @@ $ COMPOSER_HOME=$HOME/.config/composer \
   --volume $COMPOSER_HOME:$COMPOSER_HOME \
   --volume $COMPOSER_CACHE_DIR:$COMPOSER_CACHE_DIR \
   --volume $PWD:/app \
-  composer install
+  winamd64/composer install
 ```
 
 ### Filesystem permissions
@@ -102,7 +103,7 @@ By default, Composer runs as root inside the container. This can lead to permiss
 $ docker run --rm --interactive --tty \
   --volume $PWD:/app \
   --user $(id -u):$(id -g) \
-  composer install
+  winamd64/composer install
 ```
 
 ### Private repositories / SSH agent
@@ -114,7 +115,7 @@ $ docker run --rm --interactive --tty \
   --volume $PWD:/app \
   --volume $SSH_AUTH_SOCK:/ssh-auth.sock \
   --env SSH_AUTH_SOCK=/ssh-auth.sock \
-  composer install
+  winamd64/composer install
 ```
 
 **Note:** This currently does not work on OSX, see [docker/for-mac#410](https://github.com/docker/for-mac/issues/410).
@@ -129,7 +130,7 @@ $ docker run --rm --interactive --tty \
   --volume /etc/group:/etc/group:ro \
   --env SSH_AUTH_SOCK=/ssh-auth.sock \
   --user $(id -u):$(id -g) \
-  composer install
+  winamd64/composer install
 ```
 
 # Troubleshooting
@@ -169,7 +170,7 @@ Suggestions:
 	```console
 	$ docker run --rm --interactive --tty \
 	  --volume $PWD:/app \
-	  composer install --ignore-platform-reqs --no-scripts
+	  winamd64/composer install --ignore-platform-reqs --no-scripts
 	```
 
 -	create your own buid image and [install](https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md) Composer inside it.
@@ -177,7 +178,7 @@ Suggestions:
 	**Note:** Docker 17.05 introduced [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/), simplifying this enormously:
 
 	```dockerfile
-	COPY --from=composer /usr/bin/composer /usr/bin/composer
+	COPY --from=winamd64/composer /usr/bin/composer /usr/bin/composer
 	```
 
 # License
